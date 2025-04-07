@@ -1,0 +1,24 @@
+# Dependencies
+/node_modules
+
+# Build artifacts
+/out
+/dist
+/.webpack
+
+# Logs
+*.log
+debug.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env*
+!.env.example
+
+# Temporary files
+*-temp.*
+icon-temp.*
+*.iconset
