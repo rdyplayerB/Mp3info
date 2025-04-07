@@ -2,7 +2,7 @@
 
 A modern, sleek MP3 metadata editor optimized for Apple Silicon (M1/M2) processors.
 
-![MP3 Metadata Editor](assets/dmg-background.svg)
+![MP3 Metadata Editor](assets/icon.svg)
 
 ## Features
 
@@ -15,7 +15,11 @@ A modern, sleek MP3 metadata editor optimized for Apple Silicon (M1/M2) processo
 
 ## Installation
 
-Download the DMG file from the `out/make` directory, open it, and drag the MP3 Metadata Editor to your Applications folder.
+1.  Go to the [**Releases**](https://github.com/rdyplayerB/Mp3info/releases) page.
+2.  Download the latest `.dmg` file for macOS (e.g., `MP3.Metadata.Editor-X.Y.Z-arm64.dmg`).
+3.  Open the downloaded `.dmg` file.
+4.  Drag the **MP3 Metadata Editor** application into your **Applications** folder.
+5.  Launch the application from your Applications folder.
 
 ## Development
 
@@ -24,13 +28,14 @@ Download the DMG file from the `out/make` directory, open it, and drag the MP3 M
 - Node.js 16+
 - npm or yarn
 - Electron
+- (Optional but recommended for icon generation) `rsvg-convert`, `inkscape`, or `imagemagick`
 
 ### Setting up the development environment
 
 1. Clone the repository
    ```bash
-   git clone <repository-url>
-   cd mp3info
+   git clone https://github.com/rdyplayerB/Mp3info.git
+   cd Mp3info
    ```
 
 2. Install dependencies
@@ -45,13 +50,13 @@ Download the DMG file from the `out/make` directory, open it, and drag the MP3 M
 
 ### Building for Apple Silicon (M1/M2)
 
-To build an optimized package for Apple Silicon:
+To build an optimized package and DMG for Apple Silicon:
 
 ```bash
-./build-m1.sh
+./build-final.sh
 ```
 
-This will create a DMG file in the `out/make` directory optimized for M1/M2 Macs.
+This will create the application package and a distributable DMG file in the `out/make` directory optimized for M1/M2 Macs.
 
 ## Tech Stack
 
