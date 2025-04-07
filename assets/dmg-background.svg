@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="540" height="380" viewBox="0 0 540 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="540" height="380" fill="url(#background-gradient)" />
+  
+  <!-- Title -->
+  <text x="270" y="80" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">MP3 Metadata Editor</text>
+  
+  <!-- Subtitle -->
+  <text x="270" y="115" font-family="Arial, sans-serif" font-size="16" fill="white" opacity="0.8" text-anchor="middle">Optimized for Apple Silicon</text>
+  
+  <!-- Instructions -->
+  <text x="270" y="310" font-family="Arial, sans-serif" font-size="14" fill="white" opacity="0.9" text-anchor="middle">Drag the application to the Applications folder to install</text>
+  
+  <!-- Arrow pointing to the right -->
+  <path d="M270 220 L340 220 L330 210 M340 220 L330 230" stroke="white" stroke-width="2" fill="none" />
+  
+  <!-- App icon placeholder -->
+  <circle cx="180" cy="220" r="40" fill="white" opacity="0.2" />
+  <path d="M180 190 C190 190 200 195 205 205 C210 215 210 225 205 235 C200 245 190 250 180 250 C170 250 160 245 155 235 C150 225 150 215 155 205 C160 195 170 190 180 190 Z" fill="white" opacity="0.5" />
+  <path d="M170 210 L170 230 L195 220 Z" fill="white" />
+  
+  <!-- Applications folder icon -->
+  <rect x="355" y="200" width="40" height="40" rx="5" fill="white" opacity="0.2" />
+  <rect x="360" y="205" width="30" height="25" rx="3" fill="white" opacity="0.5" />
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="background-gradient" x1="0" y1="0" x2="540" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+  </defs>
+</svg> 
