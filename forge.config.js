@@ -4,7 +4,7 @@ module.exports = {
     executableName: "MP3 Metadata Editor",
     arch: "arm64",
     platform: "darwin",
-    icon: "./assets/icon.icns",
+    icon: "./assets/icon.png",
     darwinDarkModeSupport: true
   },
   rebuildConfig: {},
@@ -13,7 +13,7 @@ module.exports = {
       name: '@electron-forge/maker-dmg',
       config: {
         name: "MP3 Metadata Editor",
-        icon: "./assets/icon.icns"
+        icon: "./assets/icon.png"
       }
     }
   ],

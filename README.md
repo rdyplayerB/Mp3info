@@ -1,8 +1,8 @@
 # MP3 Metadata Editor
 
-A modern, sleek MP3 metadata editor optimized for Apple Silicon (M1/M2) processors.
+A sleek, modern MP3 metadata editor with an elegant UI, built with Electron and optimized for Apple Silicon.
 
-![MP3 Metadata Editor](assets/icon.svg)
+![MP3 Metadata Editor](assets/icon.png)
 
 ## Features
 

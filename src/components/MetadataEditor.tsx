@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Textarea } from './ui/textarea';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
-import { Music, Save, Disc, User, Calendar, Tag } from 'lucide-react';
+import React, { useState } from 'react';
+import { Save } from 'lucide-react';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 
 interface Mp3Tags {
   title?: string;
@@ -21,39 +22,53 @@ interface Mp3Tags {
 
 interface MetadataEditorProps {
   tags: Mp3Tags;
-  fileName: string;
-  onSave: (tags: Mp3Tags) => Promise<void>;
+  onSave: (updatedTags: Mp3Tags) => void;
   isLoading: boolean;
+  fileName: string;
 }
 
-const MetadataEditor: React.FC<MetadataEditorProps> = ({ 
-  tags, 
-  fileName, 
-  onSave, 
-  isLoading 
-}) => {
-  const [editedTags, setEditedTags] = useState<Mp3Tags>(tags);
-  
-  // Update local state when props change
-  useEffect(() => {
-    setEditedTags(tags);
-  }, [tags]);
+// Genre list based on ID3v1 specification
+const genres = [
+  'Blues', 'Classic Rock', 'Country', 'Dance', 'Disco', 'Funk', 'Grunge', 'Hip-Hop',
+  'Jazz', 'Metal', 'New Age', 'Oldies', 'Other', 'Pop', 'R&B', 'Rap', 'Reggae',
+  'Rock', 'Techno', 'Industrial', 'Alternative', 'Ska', 'Death Metal', 'Pranks',
+  'Soundtrack', 'Euro-Techno', 'Ambient', 'Trip-Hop', 'Vocal', 'Jazz+Funk', 'Fusion',
+  'Trance', 'Classical', 'Instrumental', 'Acid', 'House', 'Game', 'Sound Clip',
+  'Gospel', 'Noise', 'AlternRock', 'Bass', 'Soul', 'Punk', 'Space', 'Meditative',
+  'Instrumental Pop', 'Instrumental Rock', 'Ethnic', 'Gothic', 'Darkwave',
+  'Techno-Industrial', 'Electronic', 'Pop-Folk', 'Eurodance', 'Dream', 'Southern Rock',
+  'Comedy', 'Cult', 'Gangsta', 'Top 40', 'Christian Rap', 'Pop/Funk', 'Jungle',
+  'Native American', 'Cabaret', 'New Wave', 'Psychadelic', 'Rave', 'Showtunes',
+  'Trailer', 'Lo-Fi', 'Tribal', 'Acid Punk', 'Acid Jazz', 'Polka', 'Retro',
+  'Musical', 'Rock & Roll', 'Hard Rock'
+];
 
-  const handleChange = (field: keyof Mp3Tags, value: string) => {
-    if (field === 'comment') {
-      setEditedTags({
-        ...editedTags,
-        comment: {
-          language: 'eng',
-          text: value
-        }
-      });
-    } else {
-      setEditedTags({
-        ...editedTags,
-        [field]: value
-      });
-    }
+const MetadataEditor: React.FC<MetadataEditorProps> = ({ tags, onSave, isLoading, fileName }) => {
+  const [editedTags, setEditedTags] = useState<Mp3Tags>({ ...tags });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setEditedTags(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleGenreChange = (value: string) => {
+    setEditedTags(prev => ({
+      ...prev,
+      genre: value
+    }));
+  };
+
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEditedTags(prev => ({
+      ...prev,
+      comment: {
+        language: prev.comment?.language || 'eng',
+        text: e.target.value
+      }
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -64,125 +79,116 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   return (
     <Card className="w-full">
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="mr-4 p-2 rounded-full bg-secondary/50">
-              <Music className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <CardTitle>Edit Metadata</CardTitle>
-              <CardDescription>{fileName}</CardDescription>
-            </div>
-          </div>
-        </div>
+        <CardTitle className="flex items-center gap-2">
+          <span>Edit Metadata</span>
+          <span className="text-sm font-normal text-muted-foreground">
+            {fileName}
+          </span>
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} id="metadata-form" className="space-y-6">
+      <form onSubmit={handleSubmit}>
+        <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="title" className="flex items-center">
-                <Music className="h-4 w-4 mr-2" />
-                Title
-              </Label>
+              <Label htmlFor="title">Title</Label>
               <Input
                 id="title"
+                name="title"
                 value={editedTags.title || ''}
-                onChange={(e) => handleChange('title', e.target.value)}
-                placeholder="Track title"
+                onChange={handleInputChange}
+                placeholder="Song title"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="artist" className="flex items-center">
-                <User className="h-4 w-4 mr-2" />
-                Artist
-              </Label>
+              <Label htmlFor="artist">Artist</Label>
               <Input
                 id="artist"
+                name="artist"
                 value={editedTags.artist || ''}
-                onChange={(e) => handleChange('artist', e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Artist name"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="album" className="flex items-center">
-                <Disc className="h-4 w-4 mr-2" />
-                Album
-              </Label>
+              <Label htmlFor="album">Album</Label>
               <Input
                 id="album"
+                name="album"
                 value={editedTags.album || ''}
-                onChange={(e) => handleChange('album', e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Album name"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="year" className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2" />
-                Year
-              </Label>
+              <Label htmlFor="year">Year</Label>
               <Input
                 id="year"
+                name="year"
                 value={editedTags.year || ''}
-                onChange={(e) => handleChange('year', e.target.value)}
+                onChange={handleInputChange}
                 placeholder="Release year"
+                maxLength={4}
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="genre" className="flex items-center">
-                <Tag className="h-4 w-4 mr-2" />
-                Genre
-              </Label>
-              <Input
-                id="genre"
-                value={editedTags.genre || ''}
-                onChange={(e) => handleChange('genre', e.target.value)}
-                placeholder="Music genre"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="trackNumber" className="flex items-center">
-                <Tag className="h-4 w-4 mr-2" />
-                Track Number
-              </Label>
+              <Label htmlFor="trackNumber">Track Number</Label>
               <Input
                 id="trackNumber"
+                name="trackNumber"
                 value={editedTags.trackNumber || ''}
-                onChange={(e) => handleChange('trackNumber', e.target.value)}
-                placeholder="Track number"
+                onChange={handleInputChange}
+                placeholder="Track #"
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="genre">Genre</Label>
+              <Select 
+                value={editedTags.genre || ''} 
+                onValueChange={handleGenreChange}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a genre" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">None</SelectItem>
+                  {genres.map((genre) => (
+                    <SelectItem key={genre} value={genre}>
+                      {genre}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="comment" className="flex items-center">
-              Comment
-            </Label>
+            <Label htmlFor="comment">Comments</Label>
             <Textarea
               id="comment"
+              name="comment"
               value={editedTags.comment?.text || ''}
-              onChange={(e) => handleChange('comment', e.target.value)}
-              placeholder="Additional notes or comments"
+              onChange={handleCommentChange}
+              placeholder="Add comments about this track"
               rows={3}
             />
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button
-          type="submit"
-          form="metadata-form"
-          disabled={isLoading}
-          variant="gradient"
-        >
-          <Save className="mr-2 h-4 w-4" />
-          {isLoading ? 'Saving...' : 'Save Changes'}
-        </Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter>
+          <Button 
+            type="submit" 
+            disabled={isLoading}
+            className="w-full sm:w-auto"
+          >
+            <Save className="mr-2 h-4 w-4" />
+            Save Changes
+          </Button>
+        </CardFooter>
+      </form>
     </Card>
   );
 };

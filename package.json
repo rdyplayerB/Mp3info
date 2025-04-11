@@ -9,13 +9,21 @@
     "dev": "electron-forge start",
     "make:m1": "electron-forge make --arch=arm64 --platform=darwin"
   },
-  "keywords": ["mp3", "metadata", "editor", "electron", "apple-silicon", "m1"],
+  "keywords": [
+    "mp3",
+    "metadata",
+    "editor",
+    "electron",
+    "apple-silicon",
+    "m1"
+  ],
   "author": "",
   "license": "ISC",
   "description": "MP3 Metadata Editor optimized for Apple Silicon",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",

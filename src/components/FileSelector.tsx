@@ -1,46 +1,57 @@
 import React from 'react';
 import { Button } from './ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Music, Upload } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 interface FileSelectorProps {
-  onSelectFile: () => Promise<void>;
-  isLoading: boolean;
+  onFileSelect: (filePath: string) => void;
 }
 
-const FileSelector: React.FC<FileSelectorProps> = ({ onSelectFile, isLoading }) => {
+export function FileSelector({ onFileSelect }: FileSelectorProps) {
+  const handleSelectFile = () => {
+    // Get renderer API from electron
+    const { ipcRenderer } = window.require('electron');
+    
+    // Ask main process to show open file dialog
+    ipcRenderer.invoke('open-file-dialog').then((result: { canceled: boolean; filePaths: string[] }) => {
+      if (!result.canceled && result.filePaths.length > 0) {
+        onFileSelect(result.filePaths[0]);
+      }
+    });
+  };
+
   return (
-    <Card className="w-full mb-6 border-dashed border-2 hover:border-primary/50 transition-colors">
-      <CardHeader className="text-center">
-        <div className="w-12 h-12 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
-          <Music className="w-6 h-6 text-primary" />
-        </div>
-        <CardTitle>Select an MP3 File</CardTitle>
+    <Card className="card-3d w-full">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl flex items-center gap-2">
+          <Music className="h-5 w-5 text-primary" />
+          <span>Select MP3 File</span>
+        </CardTitle>
         <CardDescription>
           Choose an MP3 file to view and edit its metadata
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col items-center">
-        <div className="w-full max-w-sm mb-4 p-6 rounded-lg bg-muted/50">
-          <div className="text-sm text-muted-foreground text-center">
-            <p>Supports ID3v1 and ID3v2 tags</p>
+      <CardContent>
+        <div className="flex flex-col items-center justify-center gap-4 py-6">
+          <div className="glass-morphism p-6 rounded-full">
+            <Upload className="h-12 w-12 text-primary opacity-80" />
           </div>
+          <p className="text-muted-foreground text-center max-w-xs">
+            Click the button below to browse for an MP3 file on your computer
+          </p>
+          <Button 
+            onClick={handleSelectFile} 
+            className={cn(
+              "btn-3d mt-2 w-full max-w-xs",
+              "gradient-bg text-white hover:text-white border-none"
+            )}
+          >
+            <Upload className="mr-2 h-4 w-4" />
+            Select MP3 File
+          </Button>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-center pb-6">
-        <Button 
-          onClick={onSelectFile} 
-          disabled={isLoading}
-          className="w-full max-w-xs"
-          variant="gradient"
-          size="lg"
-        >
-          <Upload className="mr-2 h-4 w-4" />
-          {isLoading ? 'Loading...' : 'Select MP3 File'}
-        </Button>
-      </CardFooter>
     </Card>
   );
-};
-
-export default FileSelector; 
+} 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FileSelector from './FileSelector';
+import { FileSelector } from './FileSelector';
 import MetadataEditor from './MetadataEditor';
 import { AlertCircle, CheckCircle, Info } from 'lucide-react';
 
@@ -145,7 +145,7 @@ const App: React.FC = () => {
           </div>
         )}
         
-        <FileSelector onSelectFile={handleFileSelection} isLoading={isLoading} />
+        <FileSelector onFileSelect={handleFileSelection} />
         
         {currentFile && tags && (
           <MetadataEditor 

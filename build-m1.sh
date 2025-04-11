@@ -9,18 +9,9 @@ rm -rf out/
 # Ensure we have assets directory
 mkdir -p assets
 
-# Check if svgexport is installed, if not install it
-if ! npx svgexport --version &> /dev/null; then
-  echo "📦 Installing svgexport..."
-  npm install -g svgexport
-fi
-
-# Create a proper icon if it doesn't exist or is empty
+# Create an .icns file from the PNG if it doesn't exist or is empty
 if [ ! -s assets/icon.icns ]; then
-  echo "📦 Generating application icon..."
-  # For now, use a placeholder approach that works on macOS
-  # Copy the svg to png for icon creation
-  npx svgexport assets/app-icon.svg assets/icon.png 1024:1024
+  echo "📦 Generating application icon from PNG..."
   
   # Use iconutil if available (macOS)
   mkdir -p assets/icon.iconset

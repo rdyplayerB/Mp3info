@@ -13,18 +13,12 @@ mkdir -p dist
 # Copy debug-main.ts to src/main.ts (using the fixed version)
 cp debug-main.ts src/main.ts
 
-# Create a simple icon file
-echo "📦 Creating app icon..."
-cat > assets/icon.svg << 'EOL'
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="512" height="512" rx="120" fill="#3B82F6"/>
-  <text x="256" y="230" font-family="Arial, sans-serif" font-size="90" font-weight="bold" fill="white" text-anchor="middle">MP3</text>
-  <path d="M350 280 L350 170 L260 200 L260 310 C260 310 260 340 230 340 C200 340 200 310 200 310 C200 310 200 280 230 280 C245 280 255 290 260 300 L260 200" 
-        stroke="white" stroke-width="20" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <line x1="150" y1="380" x2="362" y2="380" stroke="white" stroke-width="15" stroke-linecap="round"/>
-  <line x1="150" y1="420" x2="300" y2="420" stroke="white" stroke-width="15" stroke-linecap="round"/>
-</svg>
-EOL
+# Verify icon file exists
+echo "📦 Checking app icon..."
+if [ ! -f "assets/icon.png" ]; then
+  echo "❌ Error: Icon file not found at assets/icon.png"
+  exit 1
+fi
 
 # Create fallback HTML file that will work even if the bundle fails
 echo "📝 Creating fallback HTML..."
@@ -243,7 +237,7 @@ module.exports = {
     executableName: "MP3 Metadata Editor",
     arch: "arm64",
     platform: "darwin",
-    icon: "./assets/icon.svg",
+    icon: "./assets/icon.png",
     darwinDarkModeSupport: true
   },
   rebuildConfig: {},
@@ -252,7 +246,7 @@ module.exports = {
       name: '@electron-forge/maker-dmg',
       config: {
         name: "MP3 Metadata Editor",
-        icon: "./assets/icon.svg"
+        icon: "./assets/icon.png"
       }
     }
   ],
