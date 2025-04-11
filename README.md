@@ -2,7 +2,7 @@
 
 A simple Electron application for editing MP3 metadata, built for macOS with Apple Silicon compatibility.
 
-![MP3 Metadata Editor](assets/icon.png)
+![MP3 Metadata Editor](assets/app-hero.png)
 
 ## Features
 
