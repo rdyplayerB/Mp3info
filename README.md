@@ -1,22 +1,20 @@
 # MP3 Metadata Editor
 
-A sleek, modern MP3 metadata editor with an elegant UI, built with Electron and optimized for Apple Silicon.
+A simple Electron application for editing MP3 metadata, built for macOS with Apple Silicon compatibility.
 
 ![MP3 Metadata Editor](assets/icon.png)
 
 ## Features
 
-- **Native M1/M2 Support**: Built specifically for Apple Silicon architecture
-- **Modern UI**: Clean, intuitive interface using Tailwind CSS and Shadcn UI components
-- **Fast Performance**: Optimized for Apple Silicon's ARM64 architecture
-- **Efficient Power Usage**: Designed with power management in mind for longer battery life
-- **Beautiful Interface**: Card-based design with proper spacing and visual hierarchy
-- **Native macOS Integration**: Uses native vibrancy effects and dark mode support
+- **Apple Silicon Support**: Compatible with M1/M2 Macs
+- **Basic MP3 Tag Editing**: Edit ID3 tags like title, artist, album, year, and genre
+- **Tailwind UI**: Uses Tailwind CSS and React components
+- **macOS Integration**: Supports dark mode
 
 ## Installation
 
 1.  Go to the [**Releases**](https://github.com/rdyplayerB/Mp3info/releases) page.
-2.  Download the latest `.dmg` file for macOS (e.g., `MP3.Metadata.Editor-X.Y.Z-arm64.dmg`).
+2.  Download the latest `.dmg` file for macOS.
 3.  Open the downloaded `.dmg` file.
 4.  Drag the **MP3 Metadata Editor** application into your **Applications** folder.
 5.  Launch the application from your Applications folder.
@@ -26,9 +24,8 @@ A sleek, modern MP3 metadata editor with an elegant UI, built with Electron and 
 ### Prerequisites
 
 - Node.js 16+
-- npm or yarn
+- npm
 - Electron
-- (Optional but recommended for icon generation) `rsvg-convert`, `inkscape`, or `imagemagick`
 
 ### Setting up the development environment
 
@@ -48,24 +45,22 @@ A sleek, modern MP3 metadata editor with an elegant UI, built with Electron and 
    npm run dev
    ```
 
-### Building for Apple Silicon (M1/M2)
+### Building for macOS
 
-To build an optimized package and DMG for Apple Silicon:
+To build a package and DMG:
 
 ```bash
-./build-final.sh
+./make-dmg.sh
 ```
 
-This will create the application package and a distributable DMG file in the `out/make` directory optimized for M1/M2 Macs.
+This will create the application package and a DMG file in the output directory.
 
 ## Tech Stack
 
-- **UI Framework**: React 18 with TypeScript
-- **Styling**: Tailwind CSS
-- **Components**: Shadcn UI
-- **Icons**: Lucide React
-- **Desktop Framework**: Electron
-- **MP3 Metadata**: node-id3
+- React with TypeScript
+- Electron
+- Tailwind CSS
+- node-id3 for MP3 metadata
 
 ## License
 
